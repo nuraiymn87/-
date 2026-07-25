@@ -90,47 +90,26 @@ async function addWish() {
   const nameInput = document.getElementById('wishName');
   const textInput = document.getElementById('wishText');
 
-  const name = nameInput.value.trim();
-  const text = textInput.value.trim();
+  const name = nameInput ? nameInput.value.trim() : '';
+  const text = textInput ? textInput.value.trim() : '';
 
   if (!name || !text) {
     alert('Сураныч, атыңызды жана каалооңузду жазыңыз!');
     return;
   }
 
-  // Отправляем в Supabase
-  const { error } = await supabaseClient
+  // Отправка в Supabase
+  const { data, error } = await supabaseClient
     .from('wishes')
     .insert([{ name: name, text: text }]);
 
   if (error) {
-    alert('Каалоо жөнөтүүдө ката чыкты. Кайра текшерип көрүңүз.');
-    console.error(error);
+    console.error('Ката:', error);
+    alert('Ката чыкты: ' + error.message);
   } else {
+    // Закрываем окно и очищаем поля
     closeWishModal();
-    loadWishes(); // Заново загружаем список, чтобы сразу появилось новое пожелание
+    // Обновляем список пожеланий на экране
+    loadWishes();
   }
 }
-
-// Защита от ввода вредоносных символов
-function escapeHtml(text) {
-  return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
-}
-
-// Загружаем пожелания при старте страницы
-document.addEventListener('DOMContentLoaded', () => {
-  loadWishes();
-});
-// дополнительный эффект: мягкий скролл (если появятся секции)
-document.addEventListener("scroll", () => {
-    const elements = document.querySelectorAll(".fade");
-    elements.forEach(el => {
-        const position = el.getBoundingClientRect().top;
-        const screenHeight = window.innerHeight;
-
-        if (position < screenHeight - 100) {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-        }
-    });
-});
