@@ -954,19 +954,20 @@ function closeWishModal() { document.getElementById('wishModal').classList.remov
 function addWish() {
   const nameInput = document.getElementById('wishName');
   const textInput = document.getElementById('wishText');
-  
+
   if (!nameInput || !textInput) return;
 
   const name = nameInput.value.trim();
   const text = textInput.value.trim();
 
+  // Проверка пустых полей
   if (!name || !text) {
     alert('Сураныч, атыңызды жана каалооңузду жазыңыз!');
     return;
   }
 
 
-  // ===== ОТПРАВКА В GOOGLE FORMS =====
+  // ===== СОХРАНЕНИЕ В GOOGLE SHEETS =====
   const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdJsqfyREX382kh-a7hIWsy6Na8uZQ7kfR6F_gAMLtPtj9jNw/formResponse";
 
   const formData = new FormData();
@@ -981,13 +982,18 @@ function addWish() {
   });
 
 
-  // ===== ВАШ СТАРЫЙ КОД ОСТАВЛЯЕМ =====
+  // ===== ДОБАВЛЕНИЕ КАРТОЧКИ НА САЙТ =====
 
   const track = document.getElementById('wishTrack');
 
   if (track) {
 
-    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    const initials = name
+      .split(' ')
+      .map(w => w[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
 
     const today = new Date();
 
@@ -1015,21 +1021,28 @@ function addWish() {
           <div class="wish-date">${dateStr}</div>
         </div>
 
-        <div class="wish-like" onclick="likeWish(this)">♥ 0</div>
+        <div class="wish-like" onclick="likeWish(this)">
+          ♥ 0
+        </div>
 
       </div>
     `;
+
 
     track.appendChild(card);
   }
 
 
-  // Очистка формы
+  // Очистить поля
   nameInput.value = "";
   textInput.value = "";
 
+
+  // Закрыть окно
   closeWishModal();
 
+
+  alert("Каалооңуз кабыл алынды ❤️");
 }
   const track = document.getElementById('wishTrack');
   if (track) {
