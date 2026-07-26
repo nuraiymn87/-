@@ -960,20 +960,21 @@ function addWish() {
   const name = nameInput.value.trim();
   const text = textInput.value.trim();
 
-  // Проверка пустых полей
   if (!name || !text) {
     alert('Сураныч, атыңызды жана каалооңузду жазыңыз!');
     return;
   }
 
 
-  // ===== СОХРАНЕНИЕ В GOOGLE SHEETS =====
+  // ===== GOOGLE FORMS =====
+
   const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdJsqfyREX382kh-a7hIWsy6Na8uZQ7kfR6F_gAMLtPtj9jNw/formResponse";
 
   const formData = new FormData();
 
   formData.append("entry.665963723", name);
   formData.append("entry.1319785939", text);
+
 
   fetch(formURL, {
     method: "POST",
@@ -982,7 +983,8 @@ function addWish() {
   });
 
 
-  // ===== ДОБАВЛЕНИЕ КАРТОЧКИ НА САЙТ =====
+
+  // ===== ДОБАВЛЕНИЕ КАРТОЧКИ =====
 
   const track = document.getElementById('wishTrack');
 
@@ -993,16 +995,21 @@ function addWish() {
       .map(w => w[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2);
+      .slice(0,2);
+
 
     const today = new Date();
 
-    const dateStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
+    const dateStr =
+      `${String(today.getDate()).padStart(2,'0')}.
+       ${String(today.getMonth()+1).padStart(2,'0')}.
+       ${today.getFullYear()}`;
 
 
     const card = document.createElement('div');
 
     card.className = 'wish-card';
+
 
     card.innerHTML = `
       <div class="wish-quotes">
@@ -1014,7 +1021,9 @@ function addWish() {
 
       <div class="wish-footer">
 
-        <div class="wish-avatar">${initials}</div>
+        <div class="wish-avatar">
+          ${initials}
+        </div>
 
         <div class="wish-info">
           <div class="wish-name">${name}</div>
@@ -1030,73 +1039,57 @@ function addWish() {
 
 
     track.appendChild(card);
+
+
+    // добавляем точку слайдера
+
+    const dots = document.getElementById('wishDots');
+
+    if(dots){
+
+      const dot = document.createElement('div');
+
+      dot.className = "wish-dot";
+
+      const index =
+      track.querySelectorAll('.wish-card').length - 1;
+
+
+      dot.onclick = () => goWish(index);
+
+      dots.appendChild(dot);
+
+    }
+
+
+    // перейти к новой карточке
+
+    const total =
+    track.querySelectorAll('.wish-card').length;
+
+
+    if(typeof goWish === "function"){
+      goWish(total-1);
+    }
+
   }
 
 
-  // Очистить поля
+
+  // очистка формы
+
   nameInput.value = "";
   textInput.value = "";
 
 
-  // Закрыть окно
   closeWishModal();
 
 
   alert("Каалооңуз кабыл алынды ❤️");
+
+
 }
-  const track = document.getElementById('wishTrack');
-  if (track) {
-    // 1. Карточка кошуу
-    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-    const today = new Date();
-    const dateStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
-
-    const card = document.createElement('div');
-    card.className = 'wish-card';
-    card.innerHTML = `
-      <div class="wish-quotes"><div class="wish-q"></div><div class="wish-q"></div></div>
-      <p class="wish-text">${text}</p>
-      <div class="wish-footer">
-        <div class="wish-avatar">${initials}</div>
-        <div class="wish-info">
-          <div class="wish-name">${name}</div>
-          <div class="wish-date">${dateStr}</div>
-        </div>
-        <div class="wish-like" onclick="likeWish(this)">♥ 0</div>
-      </div>`;
-    
-    track.appendChild(card);
-
-    // 2. Слайдер чекитин кошуу
-    const dotsEl = document.getElementById('wishDots');
-    if (dotsEl) {
-      const dot = document.createElement('div');
-      dot.className = 'wish-dot';
-      const newIdx = track.querySelectorAll('.wish-card').length - 1;
-      dot.onclick = () => goWish(newIdx);
-      dotsEl.appendChild(dot);
-    }
-
-    // 3. Слайдерди жаңы каалоого жылдыруу
-    const totalCards = track.querySelectorAll('.wish-card').length;
-    if (typeof goWish === 'function') {
-      goWish(totalCards - 1);
-    }
-  }
-
-  // 4. ТАЗАЛОО ЖАНА ЖАБУУ (Дайыма иштейт)
-  nameInput.value = '';
-  textInput.value = '';
-  closeWishModal();
-
-  // 5. «Каалоо-тилектер» бөлүмүнө скролл кылуу
-  setTimeout(() => {
-    const section = document.getElementById('wishTrack') ? document.getElementById('wishTrack').parentElement : null;
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, 200);
-}
+  
 </script>
 </body>
 </html>
