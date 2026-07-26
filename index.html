@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ky">
 <head>
@@ -15,7 +16,7 @@
   --cream:#faf8f5;--cream2:#f3ede4;--cream3:#e8ddd0;
   --bg-intro:#b49a72;
   --text-dark:#3a2618;--text-mid:#6b4c35;--text-light:#a08060;
-  --ornament:#aac597;
+  --ornament:#b49a72;
 }
 html{scroll-behavior:smooth;overflow-x:hidden;}
 body{
@@ -71,7 +72,7 @@ body{
   border-radius:50%;
   background:radial-gradient(circle at 35% 35%,#d8d87f,#d8d87f 50%,hsl(53, 35%, 50%) 100%);
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 8px 32px rgba(207, 220, 82, 0.5),inset 0 2px 6px rgba(227, 238, 153, 0.4);
+  box-shadow:0 8px 32px #d8d87f,inset 0 2px 6px #d8d87f;
   position:relative;
   z-index:1;
 }
@@ -111,7 +112,7 @@ body{
   font-size:10px;letter-spacing:3px;
   color:#5a3010;font-weight:700;
   text-transform:uppercase;
-  text-shadow:0 1px 2px rgba(255,200,100,0.4);
+  text-shadow:0 1px 2px #3a2b7066;
   user-select:none;
 }
 @keyframes sealPulse{
@@ -372,7 +373,7 @@ body{
 #rsvp{background:var(--cream2);padding:3rem 1.8rem;text-align:center;}
 .rsvp-title{
   font-family:'Great Vibes',cursive;font-size:1.6rem;
-  color:var(--text-dark);line-height:1.8;margin-bottom:2.5rem;
+  color:var(--text-white);line-height:1.8;margin-bottom:2.5rem;
 }
 .rsvp-options{display:flex;flex-direction:column;gap:12px;margin-bottom:2rem;}
 .rsvp-option{
@@ -393,8 +394,9 @@ body{
   content:'';width:10px;height:10px;background:var(--brown);border-radius:50%;
 }
 .rsvp-submit{
-  width:100%;padding:16px;background:var(--brown);color:#faf8f5;
+  width:100%;padding:16px;background:var(--text-white);color:#101010;
   font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:5px;
+  background-color: #f7f5f2;
   text-transform:uppercase;font-weight:600;border:none;border-radius:50px;
   cursor:pointer;transition:all 0.3s;
 }
@@ -464,7 +466,7 @@ body{
 /* MODAL */
 .modal-overlay{
   display:none;position:fixed;inset:0;
-  background:rgba(58,38,24,0.6);backdrop-filter:blur(4px);
+  background:rgba(46, 38, 93, 0.6);backdrop-filter:blur(4px);
   z-index:999;align-items:center;justify-content:center;padding:1.5rem;
 }
 .modal-overlay.open{display:flex;}
@@ -516,7 +518,7 @@ footer{
   border:1px solid rgba(255,255,255,0.3);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;z-index:500;transition:background 0.3s;
-  box-shadow:0 4px 16px rgba(90,50,20,0.3);
+  box-shadow:0 4px 16px rgba(21, 20, 90, 0.3);
 }
 #music-btn:hover{background:var(--brown);}
 #music-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
@@ -700,8 +702,8 @@ footer{
     <p class="venue-hosts">ТААЛАЙ &amp; ЧОЛПОНАЙ</p>
     <svg class="heart-icon" viewBox="0 0 48 44" fill="none">
       <path d="M12,8 C8,2 0,4 0,12 C0,22 8,26 24,38 C40,26 48,22 48,12 C48,4 40,2 36,8 C33,4 27,2 24,6 C21,2 15,4 12,8Z" fill="none" stroke="#b8a090" stroke-width="1.5"/>
-      <path d="M20,2 C16,0 14,4 16,6 C18,8 22,6 20,2Z" fill="none" stroke="#b8a090" stroke-width="1"/>
-      <path d="M28,2 C32,0 34,4 32,6 C30,8 26,6 28,2Z" fill="none" stroke="#b8a090" stroke-width="1"/>
+      <path d="M20,2 C16,0 14,4 16,6 C18,8 22,6 20,2Z" fill="none" stroke="#163a5d" stroke-width="1"/>
+      <path d="M28,2 C32,0 34,4 32,6 C30,8 26,6 28,2Z" fill="none" stroke="#163a5d" stroke-width="1"/>
     </svg>
   </section>
 
