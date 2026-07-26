@@ -960,12 +960,77 @@ function addWish() {
   const name = nameInput.value.trim();
   const text = textInput.value.trim();
 
-  // Бош болсо эскертүү чыгаруу
   if (!name || !text) {
     alert('Сураныч, атыңызды жана каалооңузду жазыңыз!');
     return;
   }
 
+
+  // ===== ОТПРАВКА В GOOGLE FORMS =====
+  const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdJsqfyREX382kh-a7hIWsy6Na8uZQ7kfR6F_gAMLtPtj9jNw/formResponse";
+
+  const formData = new FormData();
+
+  formData.append("entry.665963723", name);
+  formData.append("entry.1319785939", text);
+
+  fetch(formURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  });
+
+
+  // ===== ВАШ СТАРЫЙ КОД ОСТАВЛЯЕМ =====
+
+  const track = document.getElementById('wishTrack');
+
+  if (track) {
+
+    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+    const today = new Date();
+
+    const dateStr = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
+
+
+    const card = document.createElement('div');
+
+    card.className = 'wish-card';
+
+    card.innerHTML = `
+      <div class="wish-quotes">
+        <div class="wish-q"></div>
+        <div class="wish-q"></div>
+      </div>
+
+      <p class="wish-text">${text}</p>
+
+      <div class="wish-footer">
+
+        <div class="wish-avatar">${initials}</div>
+
+        <div class="wish-info">
+          <div class="wish-name">${name}</div>
+          <div class="wish-date">${dateStr}</div>
+        </div>
+
+        <div class="wish-like" onclick="likeWish(this)">♥ 0</div>
+
+      </div>
+    `;
+
+    track.appendChild(card);
+  }
+
+
+  // Очистка формы
+  nameInput.value = "";
+  textInput.value = "";
+
+  closeWishModal();
+
+}
   const track = document.getElementById('wishTrack');
   if (track) {
     // 1. Карточка кошуу
